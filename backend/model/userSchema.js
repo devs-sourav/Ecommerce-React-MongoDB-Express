@@ -14,18 +14,38 @@ const userSchema = new Schema({
         type:String,
         required:true
     },
+    avatar:{
+        type:String
+    },
     otp:{
         type: String
     },
-    verify:{
+    emailVerified:{
         type: Boolean,
         default: false
     },
     role:{
         type:String,
-        enum: ["Admin","Merchant","User"],
-        default: "User"
-    }
+        enum: ["Admin","Member","Merchant"],
+        default: "Member"
+    },
+    merchant:{
+        type: Boolean,
+        default: false
+    },
+    updated:{
+        type:Date
+    },
+    created:{
+        type:Date,
+        default: Date.now
+    },
+    facebookId:{
+        type: String
+    },
+    linkedinId:{
+        type: String
+    },
 
 });
 
