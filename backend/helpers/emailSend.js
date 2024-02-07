@@ -4,7 +4,7 @@ const otpTemplate = require("./otpTemplate");
 
 let emailSend = async (email,otp) =>{
 
-
+    let {BASE_EMAIL} = process.env
 
     const transporter = nodemailer.createTransport({
         service:"gmail",
@@ -16,7 +16,7 @@ let emailSend = async (email,otp) =>{
     });
 
     const info = await transporter.sendMail({
-        from: 'souravacharjee360@gmail.com', // sender address
+        from: BASE_EMAIL, // sender address
         to: email, // list of receivers
         subject: "Verify Your Account", // Subject line
         html: otpTemplate(otp),// html body
