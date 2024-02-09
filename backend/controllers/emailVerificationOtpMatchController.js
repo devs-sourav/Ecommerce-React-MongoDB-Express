@@ -1,11 +1,17 @@
+const User = require('../model/userSchema');
+
+
 
 let  emailVerificationOtpMatch = async (req,res) =>{
 
-    res.send(req.body)
+    let {otp,email} = req.body
     let otpFound = await User.find({email})
 
     if(otpFound.length > 0){
         if(otp == otpFound[0].otp){
+
+            await User.findOneAndUpdate({email:email},{otp:"", emailVerified:true})
+
             res.send({
                 message:"OTP Matched",
                 email:otpFound[0].email,

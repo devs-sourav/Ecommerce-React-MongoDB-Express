@@ -49,12 +49,14 @@ let registrationController = async (req,res) =>{
                 res.send({
                     success: "Registration Successful",
                     email: user.email,
-                    fullName: user.name
+                    name: user.name,
+                    role: user.role,
+                    emailVerified:user.emailVerified,
+                    _id:user._id
                 })
 
             });
     
-
         }
     }else{
         res.send("Email Already Exist.")

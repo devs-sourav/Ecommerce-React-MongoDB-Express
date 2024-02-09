@@ -3,10 +3,7 @@ import { Card, Flex,Button, Checkbox, Form, Input,Alert } from 'antd';
 import axios from 'axios'
 import { useNavigate,Link } from "react-router-dom";
 
-
-
-
-const Registration = () => {
+const Login = () => {
 
     const navigate = useNavigate();
 
@@ -18,15 +15,16 @@ const Registration = () => {
     const onFinish = async(values) => {
         
         let data = {
-            name: values.name,
             email:values.email,
             password:values.password
         }
-        const userData = await axios.post('http://localhost:8000/api/v1/auth/registration', data)
 
-        navigate(`/otp/${userData.data.email}`)
+        const logData = await axios.post('http://localhost:8000/api/v1/auth/login', data)
+
+        // navigate('/')
         
-        console.log('Success:', userData);
+        console.log('Success:', logData);
+
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -36,20 +34,11 @@ const Registration = () => {
   return (
     <>
         <Flex style={boxStyle} justify='center' align='center'>
-            <Card title="Registration" bordered={false} style={{ width: 400 }}>
+            <Card title="Login" bordered={false} style={{ width: 400 }}>
             <Form name="basic" labelCol={{ span: 6, }} wrapperCol={{ span: 18, }}
             style={{  maxWidth: 800, }} initialValues={{ remember: true, }} onFinish={onFinish}
             onFinishFailed={onFinishFailed} autoComplete="off"
             >
-            <Form.Item label="Full Name" name="name"
-            rules={[
-                {
-                required: true,
-                message: 'Please input your full name!',
-                },
-            ]} >
-            <Input />
-            </Form.Item>
             <Form.Item label="Email" name="email"
             rules={[
                 {
@@ -92,10 +81,13 @@ const Registration = () => {
             >
             <Button type="primary" htmlType="submit">
                 Submit
-            </Button>
+            </Button><br/>
+
             </Form.Item>
             </Form>
-            <Link to="/forgetpassword"><Alert message="Forget Password" type="info" showIcon /></Link>
+
+                <Link to="/forgetpassword"><Alert message="Forget Password" type="info" showIcon /></Link>
+            
             </Card>
 
         </Flex>
@@ -103,4 +95,4 @@ const Registration = () => {
   )
 }
 
-export default Registration
+export default Login
