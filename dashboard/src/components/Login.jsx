@@ -21,9 +21,10 @@ const Login = () => {
 
         const logData = await axios.post('http://localhost:8000/api/v1/auth/login', data)
 
-        // navigate('/')
         
-        console.log('Success:', logData);
+        if(logData.data.emailVerified){
+            navigate('/')
+        }
 
     };
     const onFinishFailed = (errorInfo) => {

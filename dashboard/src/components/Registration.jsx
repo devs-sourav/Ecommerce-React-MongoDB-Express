@@ -25,8 +25,6 @@ const Registration = () => {
         const userData = await axios.post('http://localhost:8000/api/v1/auth/registration', data)
 
         navigate(`/otp/${userData.data.email}`)
-        
-        console.log('Success:', userData);
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
