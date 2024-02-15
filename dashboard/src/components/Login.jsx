@@ -1,11 +1,15 @@
 import React from 'react'
-import { Card, Flex,Button, Checkbox, Form, Input,Alert } from 'antd';
+import { Card, Flex, Button, Checkbox, Form, Input,Alert } from 'antd';
 import axios from 'axios'
 import { useNavigate,Link } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { activeUser } from '../slices/userSlices';
+
 
 const Login = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const boxStyle = {
         width: '100wh',
@@ -15,20 +19,50 @@ const Login = () => {
     const onFinish = async(values) => {
         
         let data = {
-            email:values.email,
-            password:values.password
+            email:'souravacharjee361@gmail.com',
+            password:'11223344'
         }
 
         const logData = await axios.post('http://localhost:8000/api/v1/auth/login', data)
 
+        if(logData.data.role=="User"){
+            console.log("You do not have permission for login");
+        }else{
+            if(logData.data.emailVerified){
+                navigate('/');
+                console.log("Done");
+                localStorage.setItem("user",JSON.stringify(logData));
+                console.log(logData);
+            }else{
+                console.log("Email not verified");
+            }
+        }
         
-        if(logData.data.emailVerified){
-            navigate('/')
+    };
+    const onFinishFailed = async(errorInfo) => {
+        console.log('Failed:', errorInfo);
+        let data = {
+            email:'souravacharjee361@gmail.com',
+            password:'11223344'
         }
 
-    };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        
+
+        const logData = await axios.post('http://localhost:8000/api/v1/auth/login', data)
+
+        if(logData.data.role=="User"){
+            console.log("You do not have permission for login");
+        }else{
+            if(logData.data.emailVerified){
+                navigate('/');
+                console.log("Done");
+                localStorage.setItem("user",JSON.stringify(logData.data));
+                dispatch(activeUser(logData.data));
+            }else{
+                console.log("Email not verified");
+            }
+        }
+
     };
 
 
@@ -69,8 +103,7 @@ const Login = () => {
             wrapperCol={{
                 offset: 8,
                 span: 16,
-            }}
-            >
+            }}>
             <Checkbox>Remember me</Checkbox>
             </Form.Item>
 

@@ -26,8 +26,8 @@ const userSchema = new Schema({
     },
     role:{
         type:String,
-        enum: ["Admin","Member","Merchant"],
-        default: "Member"
+        enum: ["Admin","User","Merchant"],
+        default: "User"
     },
     merchant:{
         type: Boolean,

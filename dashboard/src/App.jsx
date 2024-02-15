@@ -11,6 +11,9 @@ import Login from './components/Login';
 import Home from './components/Home';
 import ForgotPassword from './components/ForgotPassword';
 import ChangePassword from './components/ChangePassword';
+import UserList from './components/UserList';
+import Merchant from './components/Merchant';
+import AddProduct from './components/AddProduct';
 
 // http://localhost:5173/changepassword/${token}
 
@@ -25,6 +28,9 @@ function App() {
         <Route path="/forgetpassword" element={<ForgotPassword/>}></Route>
         <Route path="/changepassword/:emailToken" element={<ChangePassword/>}></Route>
         <Route path="/" element={<Home />}>
+          <Route path="userlist" element={<UserList/>}></Route>
+          <Route path="merchant" element={<Merchant/>}></Route>
+          <Route path="addproduct" element={<AddProduct/>}></Route>
         </Route>
       </Route>
       
