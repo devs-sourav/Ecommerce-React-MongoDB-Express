@@ -9,10 +9,11 @@ const editSubCategory = require('../../controllers/editSubCategory')
 const deleteCategoryController = require('../../controllers/deleteCategoryController')
 const deleteSubCategory = require('../../controllers/deleteSubCategory')
 const approveCategoryController = require('../../controllers/approveCategoryController')
+const idleCategoryController = require('../../controllers/idleCategoryController')
 const _ = express.Router()
 
 _.post("/addcategory", addCategory)
-_.post("/viewcategory", viewCategoryController)
+_.get("/viewcategory", viewCategoryController)
 _.post("/addproduct", addProductController)
 _.post("/subcategory", subCategoryController);
 _.post("/allsubcategory", allSubCategoryController);
@@ -21,6 +22,7 @@ _.post("/editsubcategory", editSubCategory);
 _.post("/deletecategory", deleteCategoryController);
 _.post("/deletesubcategory", deleteSubCategory);
 _.post("/approvecategory", approveCategoryController);
+_.post("/idlecategory", idleCategoryController);
 
 
 module.exports = _

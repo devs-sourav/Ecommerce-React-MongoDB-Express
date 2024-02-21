@@ -21,8 +21,8 @@ const items = [
   getItem('Product', 'sub2', <AppstoreAddOutlined />, [
     getItem('Category', 'sub3', null, 
     [
-      getItem('Add Category', '5'), 
-      getItem('View Category', '6')
+      getItem('Add Category', '/addcategory'), 
+      getItem('View Category', '/allcategory')
     ]),
     getItem('SubCategory', 'sub4', null, 
     [

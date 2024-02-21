@@ -20,7 +20,7 @@ const Login = () => {
         
         let data = {
             email:'souravacharjee361@gmail.com',
-            password:'11223344'
+            password:'1122334455'
         }
 
         const logData = await axios.post('http://localhost:8000/api/v1/auth/login', data)
@@ -33,6 +33,7 @@ const Login = () => {
                 console.log("Done");
                 localStorage.setItem("user",JSON.stringify(logData));
                 console.log(logData);
+                dispatch(activeUser(logData.data));
             }else{
                 console.log("Email not verified");
             }
@@ -43,7 +44,7 @@ const Login = () => {
         console.log('Failed:', errorInfo);
         let data = {
             email:'souravacharjee361@gmail.com',
-            password:'11223344'
+            password:'1122334455'
         }
 
         
