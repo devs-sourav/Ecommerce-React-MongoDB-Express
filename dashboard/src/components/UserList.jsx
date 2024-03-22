@@ -55,8 +55,8 @@ const UserList = () => {
           value: 'Merchant',
         },
         {
-          text: 'User',
-          value: 'User',
+          text: 'Admin',
+          value: 'Admin',
         },
       ],
       onFilter: (value, record) => record.role.startsWith(value),

@@ -16,6 +16,9 @@ import Merchant from './components/Merchant';
 import AddProduct from './components/AddProduct';
 import AddCategory from './components/AddCategory';
 import AllCategory from './components/AllCategory';
+import AddSubCategory from './components/AddSubCategory';
+import ViewSubCategory from './components/ViewSubCategory';
+import AllProduct from './components/AllProduct';
 
 // http://localhost:5173/changepassword/${token}
 
@@ -35,6 +38,9 @@ function App() {
           <Route path="addproduct" element={<AddProduct/>}></Route>
           <Route path="addcategory" element={<AddCategory/>}></Route>
           <Route path="allcategory" element={<AllCategory/>}></Route>
+          <Route path="addsubcategory" element={<AddSubCategory/>}></Route>
+          <Route path="viewsubcategory" element={<ViewSubCategory/>}></Route>
+          <Route path="allproduct" element={<AllProduct/>}></Route>
         </Route>
       </Route>
       

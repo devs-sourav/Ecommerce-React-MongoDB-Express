@@ -26,13 +26,13 @@ const items = [
     ]),
     getItem('SubCategory', 'sub4', null, 
     [
-      getItem('Add SubCategory', '7'), 
-      getItem('View SubCategory', '8')
+      getItem('Add SubCategory', '/addsubcategory'), 
+      getItem('View SubCategory', '/viewsubcategory')
     ]),
     getItem('Product', 'sub5', null, 
     [
       getItem('Add Product', '/addproduct'), 
-      getItem('View Product', '14')
+      getItem('View Product', '/allproduct')
     ]),
   ]),
   getItem('Discount', 'sub6', <GiftOutlined />, [

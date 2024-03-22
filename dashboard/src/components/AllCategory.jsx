@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react';
-import { Space, Table, Tag, Button, Col, Badge, message, Popconfirm } from 'antd';
+import { Space, Table, Tag, Button, Col, Badge, message, Popconfirm, Modal, Flex, Form, Input } from 'antd';
 import { CheckOutlined,DeleteOutlined,CloseOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 const AllCategory = () => {
   const [viewCategoryList, setViewCategoryList] = useState([]);
-  const [loadingApprove, setLoadingApprove] = useState(false);
-  const [loadingIdle, setLoadingIdle] = useState(false);
   const [username, setUsername] = useState([]);
+  const [editData, setEditData] = useState('');
+  const [editId, setEditId] = useState('');
   const data = useSelector((state) => state.user.value);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
 
   useEffect(() => {
     fetchData();
   }, []);
 
+
+  
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/v1/product/viewcategory');
+
       const modifiedData = response.data.map(item => ({
         ...item,
         status: item.isActive ? 'Active' : 'Inactive',
@@ -54,7 +60,6 @@ const AllCategory = () => {
 
   const handleIdle = async (_id) => {
     try {
-      setLoadingIdle(true);
       const response = await axios.post('http://localhost:8000/api/v1/product/idlecategory', { id: _id });
       if (response.data.success) {
         message.success('Category idled successfully!', 0.8);
@@ -63,13 +68,11 @@ const AllCategory = () => {
     } catch (error) {
       message.error('Failed to idle Category', 0.8);
     } finally {
-      setLoadingIdle(false);
     }
   };
 
   const handleApprove = async (_id) => {
     try {
-      setLoadingApprove(true);
       const response = await axios.post('http://localhost:8000/api/v1/product/approvecategory', { id: _id, isActive: true });
       if (response.data.success) {
         message.success('Category approved successfully!', 0.8);
@@ -81,7 +84,6 @@ const AllCategory = () => {
       console.error('Error approving category:', error);
       message.error('Failed to approve category. Please try again.', 0.8);
     } finally {
-      setLoadingApprove(false);
     }
   };
 
@@ -105,11 +107,14 @@ const AllCategory = () => {
       // defaultSortOrder: 'ascend',
       sorter: (a, b) => a.ownerName.localeCompare(b.ownerName),
     },
+
     {
       title: 'Owner Email',
       dataIndex: 'ownerEmail',
       key: 'ownerEmail',
+      sorter: (a, b) => a.ownerEmail.localeCompare(b.ownerEmail),
     },
+    
     {
       title: 'Status',
       key: 'status',
@@ -131,6 +136,7 @@ const AllCategory = () => {
         </Tag>
       ),
     },
+
     {
       title: 'Action',
       key: 'action',
@@ -139,9 +145,32 @@ const AllCategory = () => {
           {/* {(record.ownerId.role === 'Merchant') && <Button type="primary">Edit</Button>}
           {(record.ownerId.role === 'Admin') && ((record.isActive === false) ? (loadingApprove ? <Button type="primary" loading></Button> : <Button type="primary" style={{ backgroundColor: '#52c41a', borderColor: '#52c411' }} onClick={() => handleApprove(record._id)}><CheckOutlined /></Button>) : (loadingIdle ? <Button type="primary" loading><CloseOutlined/></Button> : <Button type="primary" onClick={() => { handleIdle(record._id) }} danger><CloseOutlined/></Button>))} */}
           {
-            ( data.role == 'Admin')  ? (record.isActive == false ? <Button type="primary" style={{ backgroundColor: '#52c41a', borderColor: '#52c411' }} onClick={() => handleApprove(record._id)}><CheckOutlined /></Button>:<Button type="primary" onClick={() => { handleIdle(record._id) }} danger><CloseOutlined/></Button>)
-            : 
-            ((record.ownerId.role == 'Merchant') && (data._id == record.ownerId._id) && (data.role == 'Merchant')) && <Button type="primary">Edit</Button>
+            ( data.role == 'Admin')  
+            ?
+            (
+              record.isActive == false 
+              ?
+              <>
+                <Button type="primary" style={{ backgroundColor: '#52c41a', borderColor: '#52c411' }} onClick={() => handleApprove(record._id)}><CheckOutlined /></Button>
+                {
+                  ((data.role == 'Admin') && (data._id == record.ownerId._id))
+                  &&
+                  <Button type="primary" onClick={()=>showModal(record._id,record.name)}>Edit</Button>
+                }
+                
+              </>
+              :
+              <>
+                <Button type="primary" onClick={() => { handleIdle(record._id) }} danger><CloseOutlined/></Button>
+                {
+                  ((data.role == 'Admin') && (data._id == record.ownerId._id))
+                  &&
+                  <Button type="primary" onClick={()=>showModal(record._id,record.name)}>Edit</Button>
+                }
+              </>
+            )
+            :
+            ((record.ownerId.role == data.role) && (data._id == record.ownerId._id) && (data.role == 'Merchant') ) && <Button type="primary" onClick={()=>showModal(record._id,record.name)}>Edit</Button>
           }
           <Popconfirm
             title="Are you sure to delete this category?"
@@ -156,8 +185,85 @@ const AllCategory = () => {
     },
   ];
 
+  const showModal = (id,name) => {
+    setEditData(name)
+    setEditId(id)
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setEditData("")
+  };
+
+  const onFinish = async (values) => {
+    console.log('Success:', values);
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/product/editcategory', { name:values.name, id:editId});
+      if (response.data.success) {
+        message.success('Category Edited successfully!', 0.8);
+        fetchData(); // Refresh category list
+        setIsModalOpen(false)
+        setEditData('')
+      } else {
+        message.error('Failed to Edit category. Please try again.', 0.8);
+      }
+    } catch (error) {
+      console.error('Error Editing category:', error);
+      message.error('Failed to Edit category. Please try again.', 0.8);
+    }
+  };
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+    setEditData("")
+  };
+
   return (
     <Col span={24}>
+      <Modal title="Edit Category" width={450} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}  footer ={null} >
+        <br/>
+        <Form
+              name="basic"
+              initialValues={ 
+                { remember: true
+                }
+               }
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              <Form.Item
+                label="Category Name"
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your category name!',
+                  },
+                ]}
+              >
+                <Input/>
+              </Form.Item>
+              <Form.Item
+                wrapperCol={{
+                  offset: 8,
+                  span: 16,
+                }}
+              >
+                <Flex align="flex-start" gap="middle" >
+                  <Button type="primary" htmlType="submit">
+                    Update
+                  </Button>
+                  <Button type="primary" onClick={handleCancel}>
+                    Cancel
+                  </Button>
+                </Flex>
+
+              </Form.Item>
+            </Form>
+      </Modal>
       <h2 style={{ color: '#22222' }}>Categories <Badge count={viewCategoryList.length > 0 ? viewCategoryList.length : ''} style={{ backgroundColor: '#52c41a' }}></Badge></h2>
       <Table columns={columns} dataSource={viewCategoryList} rowKey="id" />
     </Col>

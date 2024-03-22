@@ -10,19 +10,23 @@ const deleteCategoryController = require('../../controllers/deleteCategoryContro
 const deleteSubCategory = require('../../controllers/deleteSubCategory')
 const approveCategoryController = require('../../controllers/approveCategoryController')
 const idleCategoryController = require('../../controllers/idleCategoryController')
+const approveSubcategoryController = require('../../controllers/approveSubcategoryController')
+const idleSubCategoryController = require('../../controllers/idleSubCategoryController')
 const _ = express.Router()
 
 _.post("/addcategory", addCategory)
 _.get("/viewcategory", viewCategoryController)
 _.post("/addproduct", addProductController)
 _.post("/subcategory", subCategoryController);
-_.post("/allsubcategory", allSubCategoryController);
+_.get("/allsubcategory", allSubCategoryController);
 _.post("/editcategory", editCategoryController);
 _.post("/editsubcategory", editSubCategory);
 _.post("/deletecategory", deleteCategoryController);
 _.post("/deletesubcategory", deleteSubCategory);
 _.post("/approvecategory", approveCategoryController);
+_.post("/approvesubcategory", approveSubcategoryController);
 _.post("/idlecategory", idleCategoryController);
+_.post("/idlesubcategory", idleSubCategoryController);
 
 
 module.exports = _
