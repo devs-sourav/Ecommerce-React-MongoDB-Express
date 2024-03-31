@@ -29,13 +29,19 @@ const items = [
       getItem('Add SubCategory', '/addsubcategory'), 
       getItem('View SubCategory', '/viewsubcategory')
     ]),
-    getItem('Product', 'sub5', null, 
+    getItem('Store', 'sub5', null, 
+    [
+      getItem('Add Store', '/addstore'), 
+      getItem('View Store', '/allstore')
+    ]),
+    getItem('Product', 'sub6', null, 
     [
       getItem('Add Product', '/addproduct'), 
-      getItem('View Product', '/allproduct')
+      getItem('View Product', '/allproduct'),
+      getItem('Add Variant', '/addvariant')
     ]),
   ]),
-  getItem('Discount', 'sub6', <GiftOutlined />, [
+  getItem('Discount', 'sub7', <GiftOutlined />, [
     getItem('Add Discount', '15'),
     getItem('View Discount', '16'),
   ]),

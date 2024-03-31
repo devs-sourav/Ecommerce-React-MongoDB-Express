@@ -19,6 +19,9 @@ import AllCategory from './components/AllCategory';
 import AddSubCategory from './components/AddSubCategory';
 import ViewSubCategory from './components/ViewSubCategory';
 import AllProduct from './components/AllProduct';
+import AddStore from './components/AddStore';
+import ViewStore from './components/ViewStore';
+import AddVariant from './components/AddVariant';
 
 // http://localhost:5173/changepassword/${token}
 
@@ -41,6 +44,9 @@ function App() {
           <Route path="addsubcategory" element={<AddSubCategory/>}></Route>
           <Route path="viewsubcategory" element={<ViewSubCategory/>}></Route>
           <Route path="allproduct" element={<AllProduct/>}></Route>
+          <Route path="addstore" element={<AddStore/>}></Route>
+          <Route path="addstore" element={<AddStore/>}></Route>
+          <Route path="addvariant" element={<AddVariant/>}></Route>
         </Route>
       </Route>
       
