@@ -9,6 +9,10 @@ const storeSchema = new Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
+  isActive: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 module.exports = mongoose.model("Store", storeSchema);

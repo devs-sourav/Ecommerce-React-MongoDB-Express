@@ -3,7 +3,6 @@ const Store = require("../model/storeSchema")
 
 let createStoreController = (req, res) => {
     const { storename, tradenumber, voterid, ownerId } = req.body;
-  
     let store = new Store({
       storename: storename,
       tradenumber: tradenumber,

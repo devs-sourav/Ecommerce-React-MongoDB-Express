@@ -28,7 +28,7 @@ const AddProduct = () => {
     //formdata object
     console.log(image);
     let data = await axios.post(
-      "http://localhost:8000/api/v1/product/products",
+      "http://localhost:8000/api/v1/product/addproduct",
       {
         name: values.name,
         description: description,

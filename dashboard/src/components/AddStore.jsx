@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const AddStore = () => {
     let userInfo = useSelector((state) => state.user.value);
+    console.log(userInfo._id)
     const [form] = Form.useForm(); // Create a form instance
 
     const onFinish = async (values) => {
@@ -14,7 +15,7 @@ const AddStore = () => {
           storename: values.storename,
           tradenumber: values.tradenumber,
           voterid: values.voterid,
-          ownerId: userInfo.id,
+          ownerId: userInfo._id,
         });
 
         console.log(response.data.success);
