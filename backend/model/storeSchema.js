@@ -5,10 +5,6 @@ const storeSchema = new Schema({
   storename: String,
   tradenumber: String,
   voterid: String,
-  isActive:{
-    type: Boolean,
-    default: false
-  },
   ownerId: {
     type: mongoose.Types.ObjectId,
     ref: "User",

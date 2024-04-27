@@ -28,12 +28,14 @@ const AddProduct = () => {
     //formdata object
     console.log(image);
     let data = await axios.post(
-      "http://localhost:8000/api/v1/product/addproduct",
+      "http://localhost:8000/api/v1/product/products",
       {
         name: values.name,
         description: description,
-        // variant: varinatvalue,
         avatar: image,
+        regularprice: values.regularprice,
+        salesprice: values.salesprice,
+        quantity: values.quantity,
       },
       {
         headers: {
@@ -93,9 +95,10 @@ const AddProduct = () => {
     console.log("running");
     async function getData() {
       let data = await axios.get(
-        "http://localhost:8000/api/v1/product/viewstore"
+        "http://localhost:8000/api/v1/product/allstore/65d5484bbc18f5229d735f96"
       );
-      console.log(data.data);
+      // http://localhost:8000/api/v1/product/createstore
+      console.log(data);
       setStorelist(data.data);
     }
     getData();
@@ -108,7 +111,6 @@ const AddProduct = () => {
   let handleChange2 = (e) => {
     setProductType(e);
   };
-
   return (
     <Col span={24}>
 
@@ -117,10 +119,10 @@ const AddProduct = () => {
       <Form
         name="basic"
         labelCol={{
-          span: 2.5,
+          span: 8,
         }}
         wrapperCol={{
-          span: 21.5,
+          span: 16,
         }}
         style={{
           maxWidth: 1000,
@@ -133,7 +135,16 @@ const AddProduct = () => {
         autoComplete="off"
         enctype="multipart/form-data"
       >
-
+        <Form.Item
+          wrapperCol={{
+            offset: 8,
+            span: 16,
+          }}
+        >
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
         <Form.Item
           label="Product Name"
           name="name"
@@ -141,6 +152,45 @@ const AddProduct = () => {
             {
               required: true,
               message: "Please input your product name!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Regular Price"
+          name="regularprice"
+          rules={[
+            {
+              required: true,
+              message: "Please input your regular price!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Sales Price"
+          name="salesprice"
+          rules={[
+            {
+              required: true,
+              message: "Please input your sales price!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Quantity"
+          name="quantity"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Quantity!",
             },
           ]}
         >
@@ -186,7 +236,6 @@ const AddProduct = () => {
         <Form.Item
           label="Brand Name"
           name="brandname"
-          style={{marginTop: '30px', marginBottom : '30px'}}
           rules={[
             {
               required: true,
@@ -199,16 +248,6 @@ const AddProduct = () => {
               <Select.Option value={item._id}>{item.storename}</Select.Option>
             ))}
           </Select>
-        </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
         </Form.Item>
       </Form>
       {productType == "variant" && (

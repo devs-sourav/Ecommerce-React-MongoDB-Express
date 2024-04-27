@@ -17,6 +17,7 @@ const items = [
   getItem('Users', 'sub1', <TeamOutlined />, [
     getItem('Users','/userlist' ),
     getItem('Merchant', '/merchant'),
+    getItem('Admin', '/adminlist'),
   ]),
   getItem('Product', 'sub2', <AppstoreAddOutlined />, [
     getItem('Category', 'sub3', null, 

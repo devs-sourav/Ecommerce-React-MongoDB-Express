@@ -22,6 +22,7 @@ import AllProduct from './components/AllProduct';
 import AddStore from './components/AddStore';
 import ViewStore from './components/ViewStore';
 import AddVariant from './components/AddVariant';
+import Adminlist from './components/Adminlist,';
 
 // http://localhost:5173/changepassword/${token}
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/" element={<Home />}>
           <Route path="userlist" element={<UserList/>}></Route>
           <Route path="merchant" element={<Merchant/>}></Route>
+          <Route path="adminlist" element={<Adminlist/>}></Route>
           <Route path="addproduct" element={<AddProduct/>}></Route>
           <Route path="addcategory" element={<AddCategory/>}></Route>
           <Route path="allcategory" element={<AllCategory/>}></Route>

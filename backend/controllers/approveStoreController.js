@@ -1,4 +1,4 @@
-const Store = require("../model/StoreSchema");
+const Store = require("../model/storeSchema");
 
 let approveStoreController = async (req, res) => {
     let { isActive, id } = req.body;

@@ -1,5 +1,5 @@
 
-const Store = require("../model/StoreSchema")
+const Store = require("../model/storeSchema")
 
 let createStoreController = (req, res) => {
     const { storename, tradenumber, voterid, ownerId } = req.body;

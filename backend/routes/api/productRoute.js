@@ -18,7 +18,7 @@ const allStoreController = require('../../controllers/allStoreController')
 const createStoreController = require('../../controllers/createStoreController')
 const viewStoreController = require('../../controllers/viewStoreController')
 const approveStoreController = require('../../controllers/approveStoreController')
-const idleStoreController = require('../../controllers/idleStoreController,js')
+const idleStoreController = require('../../controllers/idleStoreController')
 const deleteStoreController = require('../../controllers/deleteStoreController')
 
 

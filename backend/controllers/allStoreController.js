@@ -1,4 +1,5 @@
-const Store = require("../model/StoreSchema");
+const Store = require("../model/storeSchema");
+
 
 let allStoreController = async (req, res) => {
   const { id } = req.params;

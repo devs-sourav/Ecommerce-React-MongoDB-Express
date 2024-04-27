@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Col, Table,Badge } from 'antd';
 import axios from 'axios';
 
-const UserList = () => {
-  const [alluserList, setAllUserList] = useState([]);
+const Adminlist = () => {
+    const [alluserList, setAllUserList] = useState([]);
   const [username, setUsername] = useState([]);
   useEffect(() => {
     async function fetchUserList() {
@@ -11,7 +11,7 @@ const UserList = () => {
         const response = await axios.get('http://localhost:8000/api/v1/auth/alluserlist');
         let arr = []
         response.data.map((item,index)=>{
-          if(item.role == 'User'){
+          if(item.role == 'Admin'){
             arr.push(item)
           }
       })
@@ -74,13 +74,12 @@ const UserList = () => {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
-
   return (
     <Col span={24}>
-      <h2 style={{ color: '#22222' }}>User List <Badge count={alluserList.length > 0 ? alluserList.length : ''} style={{ backgroundColor: '#52c41a' }}></Badge></h2>
+      <h2 style={{ color: '#22222' }}>Admin List <Badge count={alluserList.length > 0 ? alluserList.length : ''} style={{ backgroundColor: '#52c41a' }}></Badge></h2>
       <Table columns={columns} dataSource={alluserList} onChange={onChange} rowKey="id" />
     </Col>
-  );
-};
+  )
+}
 
-export default UserList;
+export default Adminlist;
