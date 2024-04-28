@@ -20,6 +20,8 @@ const viewStoreController = require('../../controllers/viewStoreController')
 const approveStoreController = require('../../controllers/approveStoreController')
 const idleStoreController = require('../../controllers/idleStoreController')
 const deleteStoreController = require('../../controllers/deleteStoreController')
+const allProductController = require('../../controllers/allProductController')
+const variantController = require('../../controllers/variantController')
 
 
 const storage = multer.diskStorage({
@@ -39,11 +41,13 @@ _.get("/viewcategory", viewCategoryController)
 _.get("/allsubcategory", allSubCategoryController);
 _.get("/allstore/:id", allStoreController);
 _.get("/viewstore", viewStoreController);
+_.get("/allproduct", allProductController);
 
 
 
 _.post("/addcategory", addCategory)
 _.post("/addproduct", upload.single("avatar"), addProductController)
+_.post("/variant", upload.single("vavatar"), variantController);
 _.post("/subcategory", subCategoryController);
 _.post("/editcategory", editCategoryController);
 _.post("/editsubcategory", editSubCategory);

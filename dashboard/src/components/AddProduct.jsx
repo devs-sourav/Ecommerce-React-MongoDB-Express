@@ -119,10 +119,10 @@ const AddProduct = () => {
       <Form
         name="basic"
         labelCol={{
-          span: 8,
+          span: 3,
         }}
         wrapperCol={{
-          span: 16,
+          span: 21,
         }}
         style={{
           maxWidth: 1000,
@@ -135,16 +135,7 @@ const AddProduct = () => {
         autoComplete="off"
         enctype="multipart/form-data"
       >
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
+
         <Form.Item
           label="Product Name"
           name="name"
@@ -248,6 +239,16 @@ const AddProduct = () => {
               <Select.Option value={item._id}>{item.storename}</Select.Option>
             ))}
           </Select>
+        </Form.Item>
+        <Form.Item
+          wrapperCol={{
+            offset: 8,
+            span: 16,
+          }}
+        >
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
         </Form.Item>
       </Form>
       {productType == "variant" && (

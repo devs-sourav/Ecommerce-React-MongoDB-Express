@@ -1,34 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { Button, Checkbox,Col, Form, Input, Select } from "antd";
+import { Button, Col, Form, Input, Select } from "antd";
 import axios from "axios";
+
+const { Option } = Select;
+
 const AddVariant = () => {
-  let [value, setValue] = useState("");
-  let [image, setImage] = useState({});
-  let [imagePrev, setImagePrev] = useState("");
-  let [prolist, setProlist] = useState([]);
-  let [productId, setProductId] = useState("");
+  const [form] = Form.useForm(); // Define form instance
+  const [image, setImage] = useState({});
+  const [imagePrev, setImagePrev] = useState("");
+  const [prolist, setProlist] = useState([]);
+  const [productId, setProductId] = useState("");
 
   const onFinish = async (values) => {
     console.log("Success:", values);
     console.log(image);
-    let data = await axios.post(
-      "http://localhost:8000/api/v1/product/variant",
-      {
-        name: values.name,
-        vavatar: image,
-        productId: productId,
-        regularprice: values.regularprice,
-        salesprice: values.salesprice,
-        quantity: values.quantity,
-      },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
+    try {
+      let data = await axios.post(
+        "http://localhost:8000/api/v1/product/variant",
+        {
+          name: values.name,
+          vavatar: image,
+          productId: productId,
+          regularprice: values.regularprice,
+          salesprice: values.salesprice,
+          quantity: values.quantity,
         },
-      }
-    );
-    console.log(data);
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(data);
+
+      // Reset the form fields using the form instance
+      form.resetFields();
+      // Reset image state
+      setImage({});
+      setImagePrev("");
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -36,35 +50,37 @@ const AddVariant = () => {
   useEffect(() => {
     console.log("running");
     async function getData() {
-      let data = await axios.get(
-        "http://localhost:8000/api/v1/product/allproducts"
-      );
-      console.log(data.data);
-      let arr = [];
-      data.data.map((item) => {
-        arr.push({
+      try {
+        let data = await axios.get(
+          "http://localhost:8000/api/v1/product/allproduct"
+        );
+        console.log(data.data);
+        let arr = data.data.map((item) => ({
           label: item.name,
           value: item._id,
-        });
-      });
-      setProlist(arr);
+        }));
+        setProlist(arr);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
     getData();
   }, []);
 
-  let handleChange = (e) => {
+  const handleChange = (e) => {
     setImage(e.target.files[0]);
     setImagePrev(URL.createObjectURL(e.target.files[0]));
   };
-  let handleChange2 = (e) => {
-    setProductId(e);
-    console.log(e);
+
+  const handleChange2 = (value) => {
+    setProductId(value);
   };
 
   return (
     <Col span={16}>
-        <h2>Add Variant</h2>
+      <h2>Add Variant</h2>
       <Form
+        form={form} // Pass form instance
         name="basic"
         labelCol={{
           span: 5,
@@ -81,16 +97,29 @@ const AddVariant = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-        enctype="multipart/form-data"
       >
-        <Select
-          defaultValue="Select"
-          style={{
-            width: 120,
-          }}
-          options={prolist}
-          onChange={handleChange2}
-        />
+        <Form.Item
+          label="Product"
+          name="product"
+          rules={[
+            {
+              required: true,
+              message: "Please select a product",
+            },
+          ]}
+        >
+          <Select
+            defaultValue="Select"
+            style={{ width: 120 }}
+            onChange={handleChange2}
+          >
+            {prolist.map((item) => (
+              <Option key={item.value} value={item.value}>
+                {item.label}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
         <Form.Item
           label="Variant Name"
@@ -144,15 +173,12 @@ const AddVariant = () => {
           <Input />
         </Form.Item>
 
-        <Input onChange={handleChange} type="file" />
-        <img src={imagePrev} />
+        <Form.Item wrapperCol={{ offset: 5, span: 19 }}>
+          <Input onChange={handleChange} type="file" />
+          <img src={imagePrev} style={{ marginTop: "10px" }} />
+        </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
+        <Form.Item wrapperCol={{ offset: 5, span: 19 }}>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>

@@ -33,7 +33,7 @@ const items = [
     getItem('Store', 'sub5', null, 
     [
       getItem('Add Store', '/addstore'), 
-      getItem('View Store', '/allstore')
+      getItem('View Store', '/viewstore')
     ]),
     getItem('Product', 'sub6', null, 
     [

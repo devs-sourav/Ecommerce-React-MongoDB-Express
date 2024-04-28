@@ -233,7 +233,7 @@ const ViewStore = () => {
             </Form.Item>
           </Form>
         </Modal> */}
-        <h2 style={{ color: '#22222' }}>Sub-Categories <Badge count={viewCategoryList.length} style={{ backgroundColor: '#52c41a' }} /></h2>
+        <h2 style={{ color: '#22222' }}>Stores <Badge count={viewCategoryList.length} style={{ backgroundColor: '#52c41a' }} /></h2>
         <Table columns={columns} dataSource={viewCategoryList} rowKey="id" />
       </Col>
     );

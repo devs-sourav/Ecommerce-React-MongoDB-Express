@@ -47,8 +47,8 @@ function App() {
           <Route path="viewsubcategory" element={<ViewSubCategory/>}></Route>
           <Route path="allproduct" element={<AllProduct/>}></Route>
           <Route path="addstore" element={<AddStore/>}></Route>
-          <Route path="addstore" element={<AddStore/>}></Route>
           <Route path="addvariant" element={<AddVariant/>}></Route>
+          <Route path="viewstore" element={<ViewStore/>}></Route>
         </Route>
       </Route>
       
