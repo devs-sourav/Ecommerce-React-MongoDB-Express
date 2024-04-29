@@ -233,6 +233,7 @@ const AddProduct = () => {
               message: "Please input your brand name!",
             },
           ]}
+          style={{ marginTop: "25px" }}
         >
           <Select>
             {storelist.map((item) => (

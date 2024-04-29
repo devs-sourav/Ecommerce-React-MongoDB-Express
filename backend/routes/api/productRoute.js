@@ -22,6 +22,7 @@ const idleStoreController = require('../../controllers/idleStoreController')
 const deleteStoreController = require('../../controllers/deleteStoreController')
 const allProductController = require('../../controllers/allProductController')
 const variantController = require('../../controllers/variantController')
+const secureApi = require('../../middleware/secureApi')
 
 
 const storage = multer.diskStorage({
@@ -45,7 +46,7 @@ _.get("/allproduct", allProductController);
 
 
 
-_.post("/addcategory", addCategory)
+_.post("/addcategory",secureApi, addCategory)
 _.post("/addproduct", upload.single("avatar"), addProductController)
 _.post("/variant", upload.single("vavatar"), variantController);
 _.post("/subcategory", subCategoryController);

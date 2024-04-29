@@ -14,7 +14,13 @@ const AddCategory = () => {
       await axios.post('http://localhost:8000/api/v1/product/addcategory', {
         name: values.name,
         ownerId: data._id
-      });
+      },
+      {
+        headers: {
+          Authorization: "samindonisia",
+        },
+      }
+    );
       message.success('Category added successfully!', 0.5); // Set duration to 2 seconds
       // Reset the form fields
       form.resetFields();
@@ -63,6 +69,7 @@ const AddCategory = () => {
                 message: 'Please input your Category Name!',
               },
             ]}
+            
           >
             <Input />
           </Form.Item>

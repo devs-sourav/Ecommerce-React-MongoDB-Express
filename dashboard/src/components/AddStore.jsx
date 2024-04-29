@@ -89,6 +89,7 @@ const AddStore = () => {
               message: "Please input your voter id!",
             },
           ]}
+          
         >
           <Input />
         </Form.Item>
